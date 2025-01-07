@@ -5,6 +5,10 @@ import CanvasLoader from '../components/CanvasLoader'
 import HackerRoom from '../components/HackerRoom'
 import { useMediaQuery } from 'react-responsive'
 import { calculateSizes } from '../constants'
+import Target from '../components/Target'
+import ReactLogo from '../components/ReactLogo'
+import Cube from '../components/Cube'
+import Ring from '../components/Reing'
 
 export default function Hero() {
   const isSmall = useMediaQuery({
@@ -35,9 +39,15 @@ export default function Hero() {
             <PerspectiveCamera makeDefault position={[0, 0, 20]} />
             <HackerRoom
               scale={sizes.deskScale}
-              position={sizes.deskPosition as Vector3 | undefined}
+              position={sizes.deskPosition as Vector3}
               rotation={[0, -Math.PI, 0]}
             />
+            <group>
+              <Target position={sizes.targetPosition as Vector3} />
+              <ReactLogo position={sizes.reactLogoPosition as Vector3} />
+              <Cube position={sizes.cubePosition as Vector3} />
+              <Ring position={sizes.ringPosition} />
+            </group>
             <ambientLight intensity={1} />
             <directionalLight position={[10, 10, 10]} intensity={0.5} />
           </Suspense>
