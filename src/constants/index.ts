@@ -267,7 +267,7 @@ export const calculateSizes = (
       ? [5, 4, 0]
       : isTablet
       ? [5, 4, 0]
-      : [12, 3, 0],
+      : [18, 10, 0],
     ringPosition: isSmall
       ? [-5, 7, 0]
       : isMobile

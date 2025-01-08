@@ -1,16 +1,15 @@
 import { PerspectiveCamera } from '@react-three/drei'
 import { Canvas, Vector3 } from '@react-three/fiber'
+import { Leva } from 'leva'
 import { Suspense } from 'react'
+import { useMediaQuery } from 'react-responsive'
+import Button from '../components/Button'
 import CanvasLoader from '../components/CanvasLoader'
 import HackerRoom from '../components/HackerRoom'
-import { useMediaQuery } from 'react-responsive'
-import { calculateSizes } from '../constants'
-import Target from '../components/Target'
-import ReactLogo from '../components/ReactLogo'
-import Cube from '../components/Cube'
-import Ring from '../components/Reing'
 import HeroCamera from '../components/HeroCamera'
-import Button from '../components/Button'
+import ReactLogo from '../components/ReactLogo'
+import Ring from '../components/Reing'
+import { calculateSizes } from '../constants'
 
 export default function Hero() {
   const isSmall = useMediaQuery({
@@ -29,13 +28,12 @@ export default function Hero() {
   return (
     <section className='min-h-screen w-full flex flex-col relative'>
       <div className='w-full mx-auto flex flex-col sm:mt-36 mt-20 c-space gap-3'>
-        <p className='sm:text-3xl text-2xl font-medium text-white text-center font-generalsans'>
-          Hi, I am Behzad <span className='waving-hand'>👋🏼</span>
+        <p className='hero_tag font-gotham text-gray_gradient'>
+          Building Products
         </p>
-        <p className='hero_tag text-gray_gradient'>Building Products</p>
       </div>
       <div className='w-full h-full absolute inset-0'>
-        {/* <Leva /> */}
+        <Leva />
         <Canvas className='w-full h-full'>
           <Suspense fallback={<CanvasLoader />}>
             <PerspectiveCamera makeDefault position={[0, 0, 20]} />
@@ -49,10 +47,10 @@ export default function Hero() {
             <group>
               {!isMobile && (
                 <>
-                  <Target position={sizes.targetPosition as Vector3} />
-                  <ReactLogo position={sizes.reactLogoPosition as Vector3} />
-                  <Cube position={sizes.cubePosition as Vector3} />
-                  <Ring position={sizes.ringPosition} />
+                  {/* <Target position={sizes.targetPosition as Vector3} /> */}
+                  <ReactLogo />
+                  {/* <Cube position={sizes.cubePosition as Vector3} /> */}
+                  <Ring position={sizes.reactLogoPosition} />
                 </>
               )}
             </group>

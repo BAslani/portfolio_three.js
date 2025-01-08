@@ -14,7 +14,7 @@ export default function Model(props: GroupProps) {
   ) as unknown as DreiGLTF
   return (
     <Float floatIntensity={1}>
-      <group {...props} position={[8, 6, 0]} scale={0.3} dispose={null}>
+      <group {...props} position={[-9.2, 6.5, -2.4]} scale={0.4} dispose={null}>
         <mesh
           geometry={nodes['React-Logo_Material002_0'].geometry}
           material={materials['Material.002']}

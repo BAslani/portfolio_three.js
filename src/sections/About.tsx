@@ -12,6 +12,8 @@ export default function About() {
     }, 2000)
   }
 
+  // const shieldRing = { lat: 90, lng: 0 }
+
   return (
     <section className='c-space my-20'>
       <div className='grid xl:grid-cols-3 xl:grid-rows-6 md:grid-cols-2 grid-cols-1 gap-5 h-full'>
@@ -51,12 +53,21 @@ export default function About() {
           <div className='grid-container'>
             <div className='rounded-3xl w-full sm:h-[326px] h-fit flex justify-center items-center'>
               <Globe
+                globeImageUrl={
+                  '//unpkg.com/three-globe/example/img/earth-night.jpg'
+                }
+                // ringsData={[shieldRing]}
                 height={326}
                 width={326}
+                // ringAltitude={0.2}
+                // ringColor={() => 'lightblue'}
+                // ringMaxRadius={180}
+                // ringPropagationSpeed={20}
+                // ringRepeatPeriod={1400}
                 backgroundColor='rgba(0,0,0,0)'
                 showAtmosphere
-                globeImageUrl='//unpkg.com/three-globe/example/img/earth-night.jpg'
-                bumpImageUrl='//unpkg.com/three-globe/example/img/earth-topology.png'
+                // globeImageUrl='//unpkg.com/three-globe/example/img/earth-blue-marble.jpg'
+                // bumpImageUrl='//unpkg.com/three-globe/example/img/earth-topology.png'
                 labelsData={[
                   {
                     lat: 35.6942,
