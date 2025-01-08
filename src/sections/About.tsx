@@ -79,7 +79,7 @@ export default function About() {
             </div>
           </div>
         </div>
-        <div className='sl:col-span-2 xl:row-span-3'>
+        <div className='xl:col-span-2 xl:row-span-3'>
           <div className='grid-container'>
             <img
               src='/assets/grid3.png'
