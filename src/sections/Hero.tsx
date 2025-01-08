@@ -9,6 +9,8 @@ import Target from '../components/Target'
 import ReactLogo from '../components/ReactLogo'
 import Cube from '../components/Cube'
 import Ring from '../components/Reing'
+import HeroCamera from '../components/HeroCamera'
+import Button from '../components/Button'
 
 export default function Hero() {
   const isSmall = useMediaQuery({
@@ -37,21 +39,36 @@ export default function Hero() {
         <Canvas className='w-full h-full'>
           <Suspense fallback={<CanvasLoader />}>
             <PerspectiveCamera makeDefault position={[0, 0, 20]} />
-            <HackerRoom
-              scale={sizes.deskScale}
-              position={sizes.deskPosition as Vector3}
-              rotation={[0, -Math.PI, 0]}
-            />
+            <HeroCamera isMobile={isMobile}>
+              <HackerRoom
+                scale={sizes.deskScale}
+                position={sizes.deskPosition as Vector3}
+                rotation={[0, -Math.PI, 0]}
+              />
+            </HeroCamera>
             <group>
-              <Target position={sizes.targetPosition as Vector3} />
-              <ReactLogo position={sizes.reactLogoPosition as Vector3} />
-              <Cube position={sizes.cubePosition as Vector3} />
-              <Ring position={sizes.ringPosition} />
+              {!isMobile && (
+                <>
+                  <Target position={sizes.targetPosition as Vector3} />
+                  <ReactLogo position={sizes.reactLogoPosition as Vector3} />
+                  <Cube position={sizes.cubePosition as Vector3} />
+                  <Ring position={sizes.ringPosition} />
+                </>
+              )}
             </group>
             <ambientLight intensity={1} />
             <directionalLight position={[10, 10, 10]} intensity={0.5} />
           </Suspense>
         </Canvas>
+      </div>
+      <div className='absolute bottom-7 left-0 right-0 w-full z-10 c-space'>
+        <a href='#contact' className='w-fit'>
+          <Button
+            title={"Let's work together"}
+            isBeam
+            containerClass='sm:w-fit w-full sm:min-w-96'
+          />
+        </a>
       </div>
     </section>
   )
