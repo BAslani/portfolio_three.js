@@ -33,6 +33,11 @@ export default function Contacts() {
       )
       setLoading(false)
       alert('Your message has been sent.')
+      setForm({
+        email: '',
+        message: '',
+        name: '',
+      })
     } catch (err) {
       console.log(err)
       alert('something went wrong')
