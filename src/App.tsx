@@ -1,5 +1,6 @@
 import About from './sections/About'
 import Clients from './sections/Clients'
+import Contacts from './sections/Contacts'
 import Hero from './sections/Hero'
 import Navbar from './sections/Navbar'
 import Projects from './sections/Projects'
@@ -12,6 +13,7 @@ export default function App() {
       <About />
       <Projects />
       <Clients />
+      <Contacts />
     </main>
   )
 }
