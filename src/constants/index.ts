@@ -21,7 +21,13 @@ export const navLinks = [
   },
 ]
 
-export const clientReviews = [
+export const clientReviews: {
+  id: number
+  name: string
+  position: string
+  img: string
+  review: string
+}[] = [
   {
     id: 1,
     name: 'Emily Johnson',
