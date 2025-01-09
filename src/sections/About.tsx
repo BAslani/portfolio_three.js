@@ -15,7 +15,7 @@ export default function About() {
   // const shieldRing = { lat: 90, lng: 0 }
 
   return (
-    <section className='c-space my-20'>
+    <section id='about' className='c-space my-20'>
       <div className='grid xl:grid-cols-3 xl:grid-rows-6 md:grid-cols-2 grid-cols-1 gap-5 h-full'>
         <div className='col-span-1 xl:row-span-3'>
           <div className='grid-container'>
