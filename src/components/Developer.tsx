@@ -1,23 +1,45 @@
-import React, { useEffect, useRef } from 'react'
-import { useGraph } from '@react-three/fiber'
 import { useAnimations, useFBX, useGLTF } from '@react-three/drei'
-import { SkeletonUtils } from 'three-stdlib'
-import { GLTF } from 'three/examples/jsm/Addons.js'
+import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
+import { GLTF } from 'three-stdlib'
 
-export type DreiGLTF = GLTF & {
-  nodes: Record<string, THREE.Mesh & { skeleton?: THREE.Skeleton }>
-  materials: Record<string, THREE.MeshStandardMaterial>
+type GLTFResult = GLTF & {
+  nodes: {
+    EyeLeft: THREE.SkinnedMesh
+    EyeRight: THREE.SkinnedMesh
+    Wolf3D_Head: THREE.SkinnedMesh
+    Wolf3D_Teeth: THREE.SkinnedMesh
+    Wolf3D_Hair: THREE.SkinnedMesh
+    Wolf3D_Body: THREE.SkinnedMesh
+    Wolf3D_Outfit_Bottom: THREE.SkinnedMesh
+    Wolf3D_Outfit_Footwear: THREE.SkinnedMesh
+    Wolf3D_Outfit_Top: THREE.SkinnedMesh
+    Hips: THREE.Bone
+  }
+  materials: {
+    Wolf3D_Eye: THREE.MeshStandardMaterial
+    Wolf3D_Skin: THREE.MeshStandardMaterial
+    Wolf3D_Teeth: THREE.MeshStandardMaterial
+    Wolf3D_Hair: THREE.MeshStandardMaterial
+    Wolf3D_Body: THREE.MeshStandardMaterial
+    Wolf3D_Outfit_Bottom: THREE.MeshStandardMaterial
+    Wolf3D_Outfit_Footwear: THREE.MeshStandardMaterial
+    Wolf3D_Outfit_Top: THREE.MeshStandardMaterial
+  }
 }
 
-const Developer = ({ animationName = 'idle', ...props }) => {
-  const group = useRef(null)
+type Props = {
+  animationName: string
+}
 
-  const { scene } = useGLTF(
-    '/models/animations/developer.glb'
-  ) as unknown as DreiGLTF
-  const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene])
-  const { nodes, materials } = useGraph(clone) as unknown as DreiGLTF
+// props: JSX.IntrinsicElements['group']
+
+export default function Avatar({ animationName = 'idle', ...props }: Props) {
+  const { nodes, materials } = useGLTF(
+    '/models/animations/developerAvatar.glb'
+  ) as GLTFResult
+
+  const groupRef = useRef<THREE.Group>(null)
 
   const { animations: idleAnimation } = useFBX('/models/animations/idle.fbx')
   const { animations: saluteAnimation } = useFBX(
@@ -26,68 +48,35 @@ const Developer = ({ animationName = 'idle', ...props }) => {
   const { animations: clappingAnimation } = useFBX(
     '/models/animations/clapping.fbx'
   )
-  const { animations: victoryAnimation } = useFBX(
+  const { animations: victoryAnimations } = useFBX(
     '/models/animations/victory.fbx'
   )
 
   idleAnimation[0].name = 'idle'
   saluteAnimation[0].name = 'salute'
   clappingAnimation[0].name = 'clapping'
-  victoryAnimation[0].name = 'victory'
+  victoryAnimations[0].name = 'victory'
 
   const { actions } = useAnimations(
     [
       idleAnimation[0],
       saluteAnimation[0],
       clappingAnimation[0],
-      victoryAnimation[0],
+      victoryAnimations[0],
     ],
-    group
+    groupRef
   )
 
   useEffect(() => {
-    const action = actions[animationName]
-    if (action) {
-      action.reset().fadeIn(0.5).play()
-      return () => {
-        action.fadeOut(0.5)
-      }
+    actions[animationName]?.reset().fadeIn(0.5).play()
+    return () => {
+      actions[animationName]?.fadeOut(0.5)
     }
   }, [actions, animationName])
 
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group {...props} dispose={null} scale={3} ref={groupRef}>
       <primitive object={nodes.Hips} />
-      <skinnedMesh
-        geometry={nodes.Wolf3D_Hair.geometry}
-        material={materials.Wolf3D_Hair}
-        skeleton={nodes.Wolf3D_Hair.skeleton}
-      />
-      <skinnedMesh
-        geometry={nodes.Wolf3D_Glasses.geometry}
-        material={materials.Wolf3D_Glasses}
-        skeleton={nodes.Wolf3D_Glasses.skeleton}
-      />
-      <skinnedMesh
-        geometry={nodes.Wolf3D_Body.geometry}
-        material={materials.Wolf3D_Body}
-        skeleton={nodes.Wolf3D_Body.skeleton}
-      />
-      <skinnedMesh
-        geometry={nodes.Wolf3D_Outfit_Bottom.geometry}
-        material={materials.Wolf3D_Outfit_Bottom}
-        skeleton={nodes.Wolf3D_Outfit_Bottom.skeleton}
-      />
-      <skinnedMesh
-        geometry={nodes.Wolf3D_Outfit_Footwear.geometry}
-        material={materials.Wolf3D_Outfit_Footwear}
-        skeleton={nodes.Wolf3D_Outfit_Footwear.skeleton}
-      />
-      <skinnedMesh
-        geometry={nodes.Wolf3D_Outfit_Top.geometry}
-        material={materials.Wolf3D_Outfit_Top}
-        skeleton={nodes.Wolf3D_Outfit_Top.skeleton}
-      />
       <skinnedMesh
         name='EyeLeft'
         geometry={nodes.EyeLeft.geometry}
@@ -120,10 +109,33 @@ const Developer = ({ animationName = 'idle', ...props }) => {
         morphTargetDictionary={nodes.Wolf3D_Teeth.morphTargetDictionary}
         morphTargetInfluences={nodes.Wolf3D_Teeth.morphTargetInfluences}
       />
+      <skinnedMesh
+        geometry={nodes.Wolf3D_Hair.geometry}
+        material={materials.Wolf3D_Hair}
+        skeleton={nodes.Wolf3D_Hair.skeleton}
+      />
+      <skinnedMesh
+        geometry={nodes.Wolf3D_Body.geometry}
+        material={materials.Wolf3D_Body}
+        skeleton={nodes.Wolf3D_Body.skeleton}
+      />
+      <skinnedMesh
+        geometry={nodes.Wolf3D_Outfit_Bottom.geometry}
+        material={materials.Wolf3D_Outfit_Bottom}
+        skeleton={nodes.Wolf3D_Outfit_Bottom.skeleton}
+      />
+      <skinnedMesh
+        geometry={nodes.Wolf3D_Outfit_Footwear.geometry}
+        material={materials.Wolf3D_Outfit_Footwear}
+        skeleton={nodes.Wolf3D_Outfit_Footwear.skeleton}
+      />
+      <skinnedMesh
+        geometry={nodes.Wolf3D_Outfit_Top.geometry}
+        material={materials.Wolf3D_Outfit_Top}
+        skeleton={nodes.Wolf3D_Outfit_Top.skeleton}
+      />
     </group>
   )
 }
 
-useGLTF.preload('/models/animations/developer.glb')
-
-export default Developer
+useGLTF.preload('/models/animations/developerAvatar.glb')
